@@ -1,0 +1,97 @@
+# config/validator/validation.yaml
+App\Entity\User:
+  constraints:
+    - Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity:
+        fields: [email]
+        errorPath: email
+        message: 'Cet email est déja utilisé'
+
+
+
+  properties:
+    email:
+      - Email:
+          message: 'ce shamps doit fournir un email valide'
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+
+
+    last_name:
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+    first_name:
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+
+App\Forms\ChangePasswordForm:
+  properties:
+    password:
+      - Symfony\Component\Security\Core\Validator\Constraints\UserPassword:
+          message: 'Mot de passe incorrecte'
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+    newpassword:
+      - Length:
+          min: 8
+          minMessage: 'ce champs doit contenir au moin 8 caractéres'
+    passwordConfirmation:
+      - EqualTo:
+          propertyPath: 'newpassword'
+          message: 'La confirmation ne correspond pas au nouveau mot de passe'
+App\Forms\profileImageForm:
+  properties:
+    image:
+      - File:
+          maxSize: 2048k
+          maxSizeMessage: 'Cet image ne doit pas dépasser 2 MO'
+          mimeTypes: [ image/png, image/jpg,image/jpeg]
+          mimeTypesMessage: 'Veillez charger une image valide'
+App\Entity\Poll:
+  properties:
+    question:
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+App\Entity\PollAnswer:
+  properties:
+    answer:
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+App\Entity\Course:
+  properties:
+    title:
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+    description:
+      - NotBlank:
+          message: 'ce champs est obligatoire'
+App\Forms\File:
+  properties:
+    file:
+      - File:
+          maxSize: 4096k
+          maxSizeMessage: 'Ce fichier ne doit pas dépasser 4 MO'
+          mimeTypes: [ image/png, image/jpg,image/jpeg,application/pdf, application/x-pdf,text/html,text/plain,
+                       application/vnd.openxmlformats-officedocument.presentationml.presentation,
+                        application/vnd.openxmlformats-officedocument.wordprocessingml.document,
+                        application/vnd.openxmlformats-officedocument.spreadsheetml.sheet]
+          mimeTypesMessage: 'On autorise que les images,les documents text,pdf,word,excel,ppt et les html'
+App\Forms\PostFile:
+  properties:
+    file:
+      - File:
+          mimeTypes: [ image/png, image/jpg,image/jpeg,video/mp4]
+          mimeTypesMessage: 'On autorise que les images .jpg,.jpeg,.png et les videos mp4'
+App\Forms\FileComment:
+  properties:
+    comment_file:
+      - File:
+          maxSize: 2048k
+          mimeTypes: [ image/png, image/jpg,image/jpeg,video/mp4]
+          mimeTypesMessage: 'On autorise que les images .jpg,.jpeg,.png et les videos mp4'
+App\Forms\FileMessage:
+  properties:
+    message_file:
+      - File:
+          maxSize: 10240k
+          mimeTypes: [ image/png, image/jpg,image/jpeg,video/mp4]
+          mimeTypesMessage: 'On autorise que les images .jpg,.jpeg,.png et les videos mp4'

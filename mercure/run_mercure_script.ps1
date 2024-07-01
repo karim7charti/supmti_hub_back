@@ -1,0 +1,2 @@
+
+$env:MERCURE_PUBLISHER_JWT_KEY='test';$env:SERVER_NAME=':3001';$env:MERCURE_EXTRA_DIRECTIVES="cors_origins http://127.0.0.1:3000"; $env:MERCURE_SUBSCRIBER_JWT_KEY='test'; .\mercure.exe run -config Caddyfile.dev
